@@ -1,6 +1,7 @@
 -v0.1.0
     [x] Sistema de combate
     [x] Sistema de entidades
+    [x] Organização modular
     [x] Sistema de XP
 
 -v0.2.0
@@ -16,7 +17,7 @@
     [ ] Orientação a Objetos
     [ ] Classes
     [ ] Habilidades
-    
+
 -v2.0.0
     [ ] Modo mapa
     [ ] Mundo vivo
