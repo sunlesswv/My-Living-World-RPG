@@ -18,6 +18,7 @@ def level_up(entity, requerimento = 100):
             if entity['classe'] == 'player' and niveis > 0:
                 print(st.colors(f'{entity['nome']} subiu {niveis}', 2))
                 print(f'nivel de {entity['nome']}: {entity['level']}')
+                print(f'xp de {entity['nome']}: {entity['xp']}')
             break
 
 

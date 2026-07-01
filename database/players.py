@@ -7,7 +7,7 @@ jogadores_database = {
         'hp': 95, 'mana': 97, 'dano': 10
     },
     'arma': {'nome': 'espada de ferro quebrada', 'id': 1, 'classe': 'espada', 'dano': 20},
-    'critic_chance': 10, 'critic_x': 2.0, 
+    'critic_chance': 5, 'critic_x': 2.0, 
     'multiplicators': {
         'hp': 5, 'mana': 3, 'dano': 6
     }, 

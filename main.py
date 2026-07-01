@@ -16,13 +16,12 @@ from copy import deepcopy
 jogador = en.create_entity(p.jogadores_database, 1)
 while True:
 
-    max_life = en.max_life(jogador)
-    print(jogador)
+    #print(jogador)
     monstro = en.create_entity(m.monstros_database, randint(1, len(m.monstros_database)))
     statusj = en.refresh_entity(jogador, jogador['status']['hp'], True)
     statusm = en.refresh_entity(monstro, None, True)
-    st.linc(statusj, 50)
-    st.linc(statusm, 50)
+    #st.linc(statusj, 50)
+    #st.linc(statusm, 50)
     print(f'Seu inimigo é um {monstro['nome']}!!')
 
     while True:
@@ -43,8 +42,8 @@ while True:
 
         combate = cb.atacar(jogador, escolha, monstro)
         cb.relatorio(combate)
-        en.refresh_entity(jogador, jogador['status']['hp'])
         en.level_up(jogador)
+        en.refresh_entity(jogador, jogador['status']['hp'])
         st.lin(50)
         fim = mn.fimdojogo(jogador['status']['hp'], monstro['status']['hp'])
 
@@ -56,8 +55,8 @@ while True:
         print()
         combate = cb.atacar(monstro, escolha_monstro, jogador)
         cb.relatorio(combate)
-        en.refresh_entity(jogador, jogador['status']['hp'])
         en.level_up(jogador)
+        en.refresh_entity(jogador, jogador['status']['hp'])
         st.lin(50)
         sleep(3)
         fim = mn.fimdojogo(jogador['status']['hp'], monstro['status']['hp'])
@@ -74,7 +73,7 @@ while True:
     elif fim == 'win':
         print(st.colors(f'sua vida é: {jogador['status']['hp']:.0f}', 6))
         print(st.colors(f'Vc derrotou um {monstro['nome']}!!'))
-        cb.regain_hp(max_life, jogador)
+        cb.regain_hp(en.max_life(jogador), jogador)
 
         if st.validfim():
             print('encerrando o jogo.')

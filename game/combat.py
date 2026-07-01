@@ -36,5 +36,5 @@ def regain_hp(max_life, entity, hp = 50):
 
 def relatorio(combate):
         print(st.colors(f'{combate['atacker']} usou {combate['ataque']}', 6))
-        print(st.colors(f'Foi causado {combate['dano']} de dano ao {combate['enemy']}', 1),)
+        print(st.colors(f'Foi causado {combate['dano']:.0f} de dano ao {combate['enemy']}', 1),)
         print(st.colors(f"Vida de {combate['enemy']}: {combate['hp_enemy']:.0f}", 3))
