@@ -12,6 +12,10 @@ def calc_dano(entity, skill):
 
     return dano
 
+def max_life(entity):
+    hp = entity['status_base']['hp'] + (entity['level'] * entity['multiplicators']['hp'])
+    return hp
+
 def atacar(atacker, escolha, enemy):
         ataque = atacker['ataques'][escolha]
         dano = calc_dano(atacker, escolha)
@@ -27,12 +31,14 @@ def atacar(atacker, escolha, enemy):
                 'ataque': ataque['nome']
                 }
 
-def regain_hp(max_life, entity, hp = 50):
-    if entity['status']['hp'] + hp > max_life:
-        entity['status']['hp'] = max_life
+def regain_hp(entity, enemy, heal = 0.5):
+    hp_max = max_life(entity)
+    hp_recover = max_life(enemy) * heal
+    if entity['status']['hp'] + hp_recover > hp_max:
+        entity['status']['hp'] = hp_max
     else:
-        entity['status']['hp'] += hp
-        print(st.colors(f'{entity['nome']} recuperou {hp} de vida', 6))       
+        entity['status']['hp'] += hp_recover
+        print(st.colors(f'{entity['nome']} recuperou {hp_recover} de vida', 6))       
 
 def relatorio(combate):
         print(st.colors(f'{combate['atacker']} usou {combate['ataque']}', 6))

@@ -73,7 +73,7 @@ while True:
     elif fim == 'win':
         print(st.colors(f'sua vida é: {jogador['status']['hp']:.0f}', 6))
         print(st.colors(f'Vc derrotou um {monstro['nome']}!!'))
-        cb.regain_hp(en.max_life(jogador), jogador)
+        cb.regain_hp(jogador, monstro)
 
         if st.validfim():
             print('encerrando o jogo.')

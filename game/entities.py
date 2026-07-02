@@ -3,7 +3,7 @@ from utils import strings as st
 
 def create_entity(banco, id = 1):
     return deepcopy(banco[id])
-
+    
 
 def level_up(entity, requerimento = 100):
     niveis = 0
@@ -25,10 +25,6 @@ def level_up(entity, requerimento = 100):
 def level_up_forced(entity, level = 1):
     entity['level'] += level
 
-def max_life(entity):
-    jogador = deepcopy(entity)
-    jogador['status']['hp'] = jogador['status_base']['hp'] + (jogador['level'] * jogador['multiplicators']['hp'])
-    return jogador['status']['hp']
 
 def refresh_entity(entity, hp_in_game = None, relatorio = False):
     for k in entity['status']:
