@@ -1,7 +1,7 @@
 # Python
 __pycache__/
 *.py[cod]
-
+*teste*
 # VS Code
 .vscode/
 
