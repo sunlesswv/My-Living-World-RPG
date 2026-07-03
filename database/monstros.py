@@ -1,3 +1,6 @@
+from database import weapons as w
+
+
 monstros_database = { 
 1: {
     'nome': 'lobo', 'classe': 'monstro', 'level': 1, 'xp': 0, 
@@ -6,7 +9,7 @@ monstros_database = {
     'status_base': {
         'hp': 97.5, 'mana': 0, 'dano': 5},
     'critic_chance': 6, 'critic_x': 1.50,
-    'arma': {'nome': 'garras de lobo', 'id': 1, 'classe': 'sem_classe', 'dano': 14},
+    'arma': {'classe': 'corporal', 'id': 1},
     'multiplicators': {
         'hp': 2.5, 'mana': 0, 'dano': 4
     }, 
@@ -20,8 +23,7 @@ monstros_database = {
         'hp': 125, 'mana': 0, 'dano': 33},
     'status_base': {
         'hp': 122, 'mana': 0, 'dano': 3},
-    'arma': {
-        'nome': 'espada velha de goblin', 'id': 2, 'classe': 'espada', 'dano': 10}, 
+    'arma': {'classe': 'espadas', 'id': 2}, 
     'multiplicators': {
         'hp': 3, 'mana': 0, 'dano': 3},
     'critic_chance': 5, 'critic_x': 1.30,
@@ -41,8 +43,7 @@ monstros_database = {
         'hp': 150, 'mana': 0, 'dano': 33},
     'status_base': {
         'hp': 147, 'mana': 0, 'dano': 8},
-    'arma': {
-        'nome': 'cutelo sangrento de orc', 'id': 2, 'classe': 'cutelo', 'dano': 20}, 
+    'arma': {'classe': 'cutelos', 'id': 1}, 
     'multiplicators': {
         'hp': 3.5, 'mana': 0, 'dano': 3.5},
     'critic_chance': 5, 'critic_x': 1.40,

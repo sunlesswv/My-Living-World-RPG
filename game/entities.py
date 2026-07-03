@@ -1,10 +1,16 @@
 from copy import deepcopy
 from utils import strings as st
 from game import combat as cb
+from database import weapons as w
+
 
 def create_entity(banco, id = 1):
-    return deepcopy(banco[id])
-
+    entity = deepcopy(banco[id])
+    entity['arma'] = deepcopy(w.weapons_database
+    [entity['arma']['classe']]
+    [entity['arma']['id']]
+    )
+    return entity
 
 def level_up(entity, requerimento = 100):
     niveis = 0
