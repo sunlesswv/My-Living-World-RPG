@@ -24,7 +24,7 @@ while True:
             break
 
         #print(jogador)
-        monstro = en.create_entity(m.monstros_database, randint(1, len(m.monstros_database)))
+        monstro = en.create_entity(m.monstros_database, randint(1, 2))
         statusj = en.refresh_entity(jogador, jogador['status']['hp'], True)
         statusm = en.refresh_entity(monstro, None, True)
         #st.linc(statusj, 50)
@@ -32,7 +32,9 @@ while True:
         print(f'Seu inimigo é um {monstro['nome']}!!')
 
         while True:
-
+            if morte_fim:
+                break
+    
             print(st.colors(f'a vida do {monstro['nome']} é: {monstro['status']['hp']:.0f}', 3))
             escolha_monstro = randint(1,2)
             st.linc('MENU DE ATAQUES', 50)
@@ -92,6 +94,7 @@ while True:
             cb.regain_hp(jogador, monstro)
             mn.perfil(jogador)
             if st.validfim():
+                morte_fim = True
                 print('encerrando o jogo.',end='')
                 st.pontos()
                 break
