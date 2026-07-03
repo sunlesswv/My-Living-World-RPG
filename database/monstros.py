@@ -33,4 +33,25 @@ monstros_database = {
         'nome': 'chute', 'dano': 12
     },
     3: {'nome': 'empurrão', 'dano': 7
-    }}}}
+    }}},
+
+ 3: {
+    'nome': 'orc', 'classe': 'monstro', 'level': 1, 'xp': 0,
+    'status': {
+        'hp': 150, 'mana': 0, 'dano': 33},
+    'status_base': {
+        'hp': 147, 'mana': 0, 'dano': 8},
+    'arma': {
+        'nome': 'cutelo sangrento de orc', 'id': 2, 'classe': 'cutelo', 'dano': 20}, 
+    'multiplicators': {
+        'hp': 3.5, 'mana': 0, 'dano': 3.5},
+    'critic_chance': 5, 'critic_x': 1.40,
+    'ataques': { 
+    1: {
+        'nome': 'corte', 'dano': 20
+    },
+    2: {
+        'nome': 'chute', 'dano': 12
+    },
+    3: {'nome': 'rugido de orc', 'dano': 16
+    }}}} 
