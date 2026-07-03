@@ -31,9 +31,12 @@ def atacar(atacker, escolha, enemy):
                 'ataque': ataque['nome']
                 }
 
-def regain_hp(entity, enemy, heal = 0.5):
+def regain_hp(entity, enemy = None, heal = 0.5):
     hp_max = max_life(entity)
-    hp_recover = max_life(enemy) * heal
+    if enemy is not None:
+        hp_recover = max_life(enemy) * heal
+    else:
+        hp_recover = max_life(entity) * heal
     if entity['status']['hp'] + hp_recover > hp_max:
         entity['status']['hp'] = hp_max
     else:

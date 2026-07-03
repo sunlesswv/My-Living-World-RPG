@@ -4,15 +4,15 @@ jogadores_database = {
     'status': {
         'hp': 100, 'mana': 100, 'dano': 36,},
     'status_base': {
-        'hp': 95, 'mana': 97, 'dano': 10
+        'hp': 94, 'mana': 97, 'dano': 4
     },
-    'arma': {'nome': 'espada de ferro quebrada', 'id': 1, 'classe': 'espada', 'dano': 20},
-    'critic_chance': 5, 'critic_x': 2.0, 
+    'arma': {'nome': 'espada de ferro quebrada', 'id': 1, 'classe': 'espada', 'dano': 13},
+    'critic_chance': 5, 'critic_x': 1.5, 
     'multiplicators': {
-        'hp': 5, 'mana': 3, 'dano': 6
+        'hp': 4, 'mana': 3, 'dano': 4
     }, 
     'ataques': {
-    1: {'nome': 'corte', 'dano': 30}, 2: {'nome': 'chute', 'dano': 20}, 3: {'nome': 'empurrão', 'dano': 10}}
+    1: {'nome': 'corte', 'dano': 20}, 2: {'nome': 'chute', 'dano': 12}, 3: {'nome': 'empurrão', 'dano': 7}}
     }
 }
 

@@ -1,19 +1,20 @@
 from copy import deepcopy
 from utils import strings as st
+from game import combat as cb
 
 def create_entity(banco, id = 1):
     return deepcopy(banco[id])
-    
+
 
 def level_up(entity, requerimento = 100):
     niveis = 0
     while True:
-        req_xp = entity['level'] * requerimento
-        if entity['xp'] >= req_xp:
-            entity['xp'] -= req_xp
+        reqxp = req_xp(entity, requerimento)
+        if entity['xp'] >= reqxp:
+            entity['xp'] -= reqxp
             entity['level'] += 1
-            print(st.colors(f'{entity['nome']} subiu de nivel', 2))
             niveis += 1
+            cb.regain_hp(entity)
         else:
             if entity['classe'] == 'player' and niveis > 0:
                 print(st.colors(f'{entity['nome']} subiu {niveis}', 2))
@@ -21,6 +22,8 @@ def level_up(entity, requerimento = 100):
                 print(f'xp de {entity['nome']}: {entity['xp']}')
             break
 
+def req_xp(entity, requerimento = 100):
+    return entity['level'] * requerimento
 
 def level_up_forced(entity, level = 1):
     entity['level'] += level
