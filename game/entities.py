@@ -23,7 +23,12 @@ def level_up(entity, requerimento = 100):
             cb.regain_hp(entity)
         else:
             if entity['classe'] == 'player' and niveis > 0:
-                print(st.colors(f'{entity['nome']} subiu {niveis}', 2))
+                if niveis == 1:
+                    nivel_escrito = 'nivel'
+                else:
+                    nivel_escrito = 'niveis'
+
+                print(st.colors(f'{entity['nome']} subiu {niveis} {nivel_escrito}', 2))
                 print(f'nivel de {entity['nome']}: {entity['level']}')
                 print(f'xp de {entity['nome']}: {entity['xp']}')
             break
@@ -35,21 +40,30 @@ def level_up_forced(entity, level = 1):
     entity['level'] += level
 
 
-def refresh_entity(entity, hp_in_game = None, relatorio = False):
+def refresh_entity(entity, relatorio = False):
+    level_up(entity)
+    print(f'o hp do jogador depois de subir de nivel e antes de recalcular é {entity['status']['hp']}')
+    hp_anterior = entity['status']['hp']
     for k in entity['status']:
         entity['status'][k] = entity['status_base'][k] + (entity['level'] * entity['multiplicators'][k])
-    if hp_in_game is not None:
-        hp_perdido = entity['status']['hp'] - hp_in_game
-        entity['status']['hp'] -= hp_perdido
+
+    hp_perdido = entity['status']['hp'] - hp_anterior
+    entity['status']['hp'] -= hp_perdido
+
     entity['status']['dano'] += entity['arma']['dano']
+
+    if relatorio:
+        show_damage(entity)
+
+        
+def show_damage(entity):
     name = entity['nome']
     total =  entity['status']['dano']
     espada = entity['arma']['dano']
     base = entity['status_base']['dano']
     bonus_nivel = entity['multiplicators']['dano']
     bonus_nivel_total = entity['level'] * entity['multiplicators']['dano']
-    if relatorio:
-        return f'''Nome da entidade: {name}
+    return f'''Nome da entidade: {name}
 Dano total: {total}
 Dano da espada: {espada}
 Dano base: {base}

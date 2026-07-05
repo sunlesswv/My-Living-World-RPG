@@ -7,7 +7,7 @@ jogadores_database = {
     'status': {
         'hp': 100, 'mana': 100, 'dano': 36,},
     'status_base': {
-        'hp': 94, 'mana': 97, 'dano': 4
+        'hp': 96, 'mana': 97, 'dano': 4
     },
     'arma': {'classe': 'espadas', 'id': 1},
     'critic_chance': 5, 'critic_x': 1.5, 

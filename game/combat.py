@@ -37,11 +37,19 @@ def regain_hp(entity, enemy = None, heal = 0.5):
         hp_recover = max_life(enemy) * heal
     else:
         hp_recover = max_life(entity) * heal
+    st.lin(50)
+    print(st.colors(f'{entity['nome']} recuperou {hp_recover} de vida', 6))
+    
     if entity['status']['hp'] + hp_recover > hp_max:
         entity['status']['hp'] = hp_max
     else:
         entity['status']['hp'] += hp_recover
-        print(st.colors(f'{entity['nome']} recuperou {hp_recover} de vida', 6))       
+
+def verif_morte(entity):
+    if entity['status']['hp'] <= 0:
+         return True
+    else:
+         return False
 
 def relatorio(combate):
         print(st.colors(f'{combate['atacker']} usou {combate['ataque']}', 6))

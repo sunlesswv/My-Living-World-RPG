@@ -12,89 +12,88 @@ from random import randint
 from time import sleep
 from copy import deepcopy
 
-morte_fim = False
-while True:
-    if morte_fim:
-            break
-    
-    jogador = en.create_entity(p.jogadores_database, 1)
-    mn.perfil(jogador)
+def load_player(player):
+    return en.create_entity(player, 1)
+
+def init_game(jogador):
+    #print(jogador)
+    enemy = en.create_entity(m.monstros_database, randint(1, 2))
+    danoj = en.refresh_entity(jogador, True)
+    danom = en.refresh_entity(enemy, True)
+    #st.linc(danoj, 50)
+    #st.linc(danom, 50)
+    mn.perfil(jogador, True)
+    sleep(2)
+    print(f'Seu inimigo é um {enemy['nome']}!!')
+    return enemy
+
+def batalha(entity, enemy):
     while True:
-        if morte_fim:
-            break
+        mn.perfil(entity, False)
+        mn.perfil(enemy, False)
 
-        #print(jogador)
-        monstro = en.create_entity(m.monstros_database, randint(1, 2))
-        statusj = en.refresh_entity(jogador, jogador['status']['hp'], True)
-        statusm = en.refresh_entity(monstro, None, True)
-        #st.linc(statusj, 50)
-        #st.linc(statusm, 50)
-        print(f'Seu inimigo é um {monstro['nome']}!!')
+        mn.mostrar_ataques(entity)
+        escolha = mn.escolha_ataques(entity)
 
-        while True:
-            if morte_fim:
-                break
-    
-            print(st.colors(f'a vida do {monstro['nome']} é: {monstro['status']['hp']:.0f}', 3))
-            escolha_monstro = randint(1,2)
-            st.linc('MENU DE ATAQUES', 50)
+        combate = cb.atacar(entity, escolha, enemy)
+        cb.relatorio(combate)
+        en.refresh_entity(entity)
+        st.lin(50)
 
-            while True:
+        if cb.verif_morte(enemy):
+            return 'win'
+        print('Esperando o ataque do monstro.',end='', flush=True)
+        st.pontos()
+        print()
+        escolha_monstro = randint(1, len(enemy['ataques']))
+        combate = cb.atacar(enemy, escolha_monstro, entity)
+        cb.relatorio(combate)
+        st.lin(50)
+        if cb.verif_morte(entity):
+            return 'lose'
+        sleep(3)
 
-                escolha = st.validnum('[1] para corte\n[2] para empurrão\n[3] para chute\n')
-                st.lin(50)
-                if escolha not in (1,2,3):
-                    print('erro, digite apenas 1,2 ou 3')
-                else:
-                    break
+def check_resultado(jogador, enemy, resultado):
+    print(st.colors(f'a vida do {enemy['nome']} é: {enemy['status']['hp']:.0f}', 3))
+    print(st.colors(f'sua vida é: {jogador['status']['hp']:.0f}', 6))
 
-            combate = cb.atacar(jogador, escolha, monstro)
-            cb.relatorio(combate)
-            en.level_up(jogador)
-            en.refresh_entity(jogador, jogador['status']['hp'])
-            st.lin(50)
-            fim = mn.fimdojogo(jogador['status']['hp'], monstro['status']['hp'])
-
-            if fim in ('win', 'loose'):
-                break
-
-            print('Esperando o ataque do monstro.',end='', flush=True)
+    if resultado == 'lose':
+        print(st.colors('VC MORREU', 1)) 
+        if st.validfim():
+            print('encerrando o jogo.',end='')
+            st.pontos()
+            return 'end'
+        else:
+            print('Recomeçando.',end='')
             st.pontos()
             print()
-            combate = cb.atacar(monstro, escolha_monstro, jogador)
-            cb.relatorio(combate)
-            en.level_up(jogador)
-            en.refresh_entity(jogador, jogador['status']['hp'])
-            st.lin(50)
-            sleep(3)
-            fim = mn.fimdojogo(jogador['status']['hp'], monstro['status']['hp'])
+            return 'restart'
+        
+    elif resultado == 'win':
+        print(st.colors(f'Vc derrotou um {enemy['nome']}!!'))
+        cb.regain_hp(jogador, enemy)
+        mn.perfil(jogador)
+        if st.validfim():
+            print('encerrando o jogo.',end='')
+            st.pontos()
+            return 'end'
+        
+def game(database):
+    fim = ''      
+    while True:
+        jogador = load_player(database)
+        while True:
+            monstro = init_game(jogador)
 
-            if fim in ('win', 'loose'):
-                break
+            resultado = batalha(jogador, monstro)
 
-            print(st.colors(f'sua vida é: {jogador['status']['hp']:.0f}', 6))
+            fim = check_resultado(jogador, monstro, resultado)
 
-        if fim == 'loose':
-            print(st.colors(f'sua vida é: {jogador['status']['hp']:.0f}', 6))
-            print(st.colors(f'a vida do {monstro['nome']} é: {monstro['status']['hp']:.0f}', 3))
-            print(st.colors('VC MORREU', 1))
-            if st.validfim():
-                morte_fim = True
-                print('encerrando o jogo.',end='')
-                st.pontos()
+            if fim in ('end', 'restart'):
                 break
-            else:
-                print('Recomeçando.',end='')
-                st.pontos()
-                print()
-                break
+        if fim == 'end':
+            break
 
-        elif fim == 'win':
-            print(st.colors(f'Vc derrotou um {monstro['nome']}!!'))
-            cb.regain_hp(jogador, monstro)
-            mn.perfil(jogador)
-            if st.validfim():
-                morte_fim = True
-                print('encerrando o jogo.',end='')
-                st.pontos()
-                break
+
+jogador = p.jogadores_database
+game(jogador)
