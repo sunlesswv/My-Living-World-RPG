@@ -31,6 +31,6 @@ def escolha_ataques(jogador):
         escolha = st.validnum('Escolha um ataque: ')
         st.lin(50)
         if escolha not in (jogador['ataques']):
-            print(st.colors('erro, digite apenas 1,2 ou 3'), 1)
+            print(st.colors('erro, digite apenas 1,2 ou 3', 1))
         else:
             return escolha

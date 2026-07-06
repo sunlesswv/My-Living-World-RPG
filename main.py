@@ -11,17 +11,13 @@ from database import weapons as w
 from random import randint
 from time import sleep
 from copy import deepcopy
+import json
 
-def load_player(player):
-    return en.create_entity(player, 1)
-
+    
 def init_game(jogador):
-    #print(jogador)
     enemy = en.create_entity(m.monstros_database, randint(1, 2))
-    danoj = en.refresh_entity(jogador, True)
-    danom = en.refresh_entity(enemy, True)
-    #st.linc(danoj, 50)
-    #st.linc(danom, 50)
+    en.refresh_entity(jogador)
+    en.refresh_entity(enemy)
     mn.perfil(jogador, True)
     sleep(2)
     print(f'Seu inimigo é um {enemy['nome']}!!')
@@ -71,18 +67,20 @@ def check_resultado(jogador, enemy, resultado):
         
     elif resultado == 'win':
         print(st.colors(f'Vc derrotou um {enemy['nome']}!!'))
-        cb.regain_hp(jogador, enemy)
+        cb.regain_hp(jogador, enemy, 0.6)
+        sv.save(jogador,"player1.json")
         mn.perfil(jogador)
         if st.validfim():
             print('encerrando o jogo.',end='')
             st.pontos()
             return 'end'
         
-def game(database):
+def game():
     fim = ''      
     while True:
-        jogador = load_player(database)
         while True:
+            jogador = sv.load_save("player1.json")
+            
             monstro = init_game(jogador)
 
             resultado = batalha(jogador, monstro)
@@ -95,5 +93,4 @@ def game(database):
             break
 
 
-jogador = p.jogadores_database
-game(jogador)
+game()

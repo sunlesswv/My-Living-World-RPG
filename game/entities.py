@@ -39,18 +39,31 @@ def req_xp(entity, requerimento = 100):
 def level_up_forced(entity, level = 1):
     entity['level'] += level
 
+def load_weapon(entity, dano=False):
+    arma = deepcopy(w.weapons_database
+    [entity['arma']['classe']]
+    [entity['arma']['id']]
+    )
+    if dano:
+        return arma['dano']
+    else:
+        entity['arma'] = arma
+
+
+def unload_weapon(entity):
+    entity['arma'] = {'classe': entity['arma']['classe'], 
+    'id': entity['arma']['id']}
 
 def refresh_entity(entity, relatorio = False):
     level_up(entity)
-    print(f'o hp do jogador depois de subir de nivel e antes de recalcular é {entity['status']['hp']}')
     hp_anterior = entity['status']['hp']
     for k in entity['status']:
         entity['status'][k] = entity['status_base'][k] + (entity['level'] * entity['multiplicators'][k])
 
     hp_perdido = entity['status']['hp'] - hp_anterior
     entity['status']['hp'] -= hp_perdido
-
-    entity['status']['dano'] += entity['arma']['dano']
+    weapon_damage = load_weapon(entity, True)
+    entity['status']['dano'] += weapon_damage
 
     if relatorio:
         show_damage(entity)
@@ -59,8 +72,8 @@ def refresh_entity(entity, relatorio = False):
 def show_damage(entity):
     name = entity['nome']
     total =  entity['status']['dano']
-    espada = entity['arma']['dano']
     base = entity['status_base']['dano']
+    espada = load_weapon(entity, True)
     bonus_nivel = entity['multiplicators']['dano']
     bonus_nivel_total = entity['level'] * entity['multiplicators']['dano']
     return f'''Nome da entidade: {name}
