@@ -3,7 +3,7 @@ from database import weapons as w
 
 jogadores_database = { 
 1: {
-    'nome': 'kauã', 'classe': 'player', 'level': 1, 'xp': 0, 
+    'nome': 'jogador', 'classe': 'player', 'level': 1, 'xp': 0, 
     'status': {
         'hp': 100, 'mana': 100, 'dano': 25.5,},
     'status_base': {

@@ -11,9 +11,12 @@ from database import weapons as w
 from random import randint
 from time import sleep
 from copy import deepcopy
+from pathlib import Path
 import json
 
+
     
+
 def init_game(jogador):
     enemy = en.create_entity(m.monstros_database, randint(1, 2))
     en.refresh_entity(jogador)
@@ -49,7 +52,7 @@ def batalha(entity, enemy):
             return 'lose'
         sleep(3)
 
-def check_resultado(jogador, enemy, resultado):
+def check_resultado(jogador, enemy, resultado, nome_save):
     print(st.colors(f'a vida do {enemy['nome']} é: {enemy['status']['hp']:.0f}', 3))
     print(st.colors(f'sua vida é: {jogador['status']['hp']:.0f}', 6))
 
@@ -68,7 +71,7 @@ def check_resultado(jogador, enemy, resultado):
     elif resultado == 'win':
         print(st.colors(f'Vc derrotou um {enemy['nome']}!!'))
         cb.regain_hp(jogador, enemy, 0.6)
-        sv.save(jogador,"player1.json")
+        sv.save(jogador, nome_save)
         mn.perfil(jogador)
         if st.validfim():
             print('encerrando o jogo.',end='')
@@ -78,14 +81,15 @@ def check_resultado(jogador, enemy, resultado):
 def game():
     fim = ''      
     while True:
-        while True:
-            jogador = sv.load_save("player1.json")
-            
+        save = sv.choose_save()
+        jogador = save[0]
+        nome_save = save[1]
+        while True:            
             monstro = init_game(jogador)
 
             resultado = batalha(jogador, monstro)
 
-            fim = check_resultado(jogador, monstro, resultado)
+            fim = check_resultado(jogador, monstro, resultado, nome_save)
 
             if fim in ('end', 'restart'):
                 break

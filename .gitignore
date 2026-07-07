@@ -2,6 +2,8 @@
 __pycache__/
 *.py[cod]
 *teste*
+saves/*
+!saves/.gitkeep
 # VS Code
 .vscode/
 
