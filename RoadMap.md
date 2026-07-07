@@ -5,22 +5,22 @@
     [x] Sistema de XP
 
 -v0.2.0
-    [ ] Bancos de items
-    [ ] Sistema de save
-    [ ] Mais entidades
+    [x] Bancos de items
+    [x] Sistema de save
+    [x] Mais entidades
 
 -v0.3.0
-    [ ] transformado em interface pelo tkinter
-    [ ] mais entidades
+    [] transformado em interface pelo tkinter
+    [] mais entidades
 
 -v1.0.0
-    [ ] Orientação a Objetos
-    [ ] Classes
-    [ ] Habilidades
+    [] Orientação a Objetos
+    [] Classes
+    [] Habilidades
 
 -v2.0.0
-    [ ] Modo mapa
-    [ ] Mundo vivo
+    [] Modo mapa
+    [] Mundo vivo
 
 -v1.0.0(rework)
-    [ ] migração para c# e unity
+    [] migração para c# e unity

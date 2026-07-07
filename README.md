@@ -13,10 +13,10 @@ My Living World RPG é um projeto pessoal criado com o objetivo de aprender dese
 - Sistema de XP e níveis
 - Sistema de armas
 - Organização modular do projeto
+- Sistema de save
 
 ## Planejamento
 
-- Sistema de save
 - Interface com Tkinter
 - Orientação a Objetos
 - Classes
