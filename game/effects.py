@@ -15,7 +15,7 @@ def processar_sangramento(entity):
     entity['status']['hp'] -= dano
     print(st.colors(f"{entity['nome']} sob efeito de sangramento, -{dano:.1f} de vida"))
     verif_duração(entity, 'sangramento')
-    
+
 def aplicar_atordoamento(skill, entity):
     entity['modifiers']['debuffs']['atordoamento'] = deepcopy(skill['efeitos']['atordoamento'])
     aplicar_msg(entity, 'atordoamento')
@@ -35,7 +35,8 @@ def processar_fraqueza(entity):
         fraqueza['modificadores'] = {
             'dano': entity['status_max']['dano'] * fraqueza['status_reduzido'],
             'hp': entity['status_max']['hp'] * fraqueza['status_reduzido']}
-        aplicar_modificadores(entity, 'fraqueza')
+        entity['status']['hp'] = max(0, entity['status']['hp'] - fraqueza['modificadores']['hp'])
+        aplicar_modificadores(entity, 'debuffs', 'fraqueza')
     verif_duração(entity, 'fraqueza')    
 
 

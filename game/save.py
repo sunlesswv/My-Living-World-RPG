@@ -4,6 +4,7 @@ from copy import deepcopy
 from pathlib import Path
 from game import entities as en
 from utils import strings as st
+from game import entities as en
 
 
 def load_save(arquivo):
@@ -14,6 +15,7 @@ def load_save(arquivo):
             en.load_weapon(jogador)
             en.load_skills(jogador)
             json_int_keys(jogador)
+            en.refresh_entity(jogador)
             return jogador
             
             
@@ -83,6 +85,7 @@ def new_save():
             print(st.colors('erro, esse save ja existe', 1))
         else:
             jogador = deepcopy(p.jogadores_database[1])
+            en.refresh_entity(jogador)
             jogador['status']['hp'] = jogador['status_max']['hp']
             jogador['status']['mana'] = jogador['status_max']['mana']
             jogador['nome'] = st.valid_name(input('digite o do personagem: '))

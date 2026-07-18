@@ -92,6 +92,7 @@ def refresh_entity(entity, relatorio = False):
                 ef.aplicar_modificadores(entity, 'debuffs', name)
 
     entity['status']['hp'] = min(entity['status']['hp'], entity['status_max']['hp'])
+    entity['status']['mana'] = min(entity['status']['mana'], entity['status_max']['mana'])
     weapon_damage = load_weapon(entity, True)
     entity['status_max']['dano'] += weapon_damage
 

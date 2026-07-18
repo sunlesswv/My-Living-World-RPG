@@ -69,16 +69,16 @@ monstros_database = {
         'hp': 150, 'mana': 0
     },
     'status_base': {
-        'hp': 1000, 'mana': 0, 'dano': 8
+        'hp': 141, 'mana': 91, 'dano': 8
     },
     'status_max': {
-        'hp': 150, 'mana': 0, 'dano': 33.5
+        'hp': 150, 'mana': 100, 'dano': 33.5
     },
     'arma': {'classe': 'cutelos', 'id': 1},
     'critic_chance': 5, 'critic_x': 1.40,
     'modifiers': {
         'level': {
-            'hp': 9, 'mana': 0, 'dano': 5.5
+            'hp': 9, 'mana': 9, 'dano': 5.5
         },
         'debuffs': {
 

@@ -44,6 +44,13 @@ def verif_ataque(entity):
                 print('todos ataques em cooldown, passando a vez')
                 return False
                 
+            for ataque in ataques.values():
+                 if ataque['mana'] <= entity['status']['mana']:
+                      break
+            else:
+                 print('mana insuficiente para qualquer ataque, passando a vez')
+                 return False     
+
             debuffs = entity['modifiers']['debuffs']
             for debuff in debuffs.values():
                 if debuff['classe'] == 'controle':
@@ -53,14 +60,29 @@ def verif_ataque(entity):
 
 def regain_hp(entity, target = None, heal = 0.5):
     hp_max = entity['status_max']['hp']
+    hp_anterior = entity['status']['hp']
+
     if target is not None:
         hp_recover = target['status_max']['hp'] * heal
     else:
         hp_recover = hp_max * heal
     st.lin(50)
-    print(st.colors(f'{entity['nome']} recuperou {hp_recover} de vida', 6))
-
     entity['status']['hp'] = min(entity['status']['hp'] + hp_recover, hp_max)
+    hp_recovered = entity['status']['hp'] - hp_anterior
+
+    print(st.colors(f"{entity['nome']} recuperou {hp_recovered:.1f} de vida", 6))
+
+
+def regain_mana(entity, gain = 0.5):
+    mana_max = entity['status_max']['mana']
+    mana_anterior = entity['status']['mana']
+
+    mana_recover = mana_max * gain
+    st.lin(50)
+    entity['status']['mana'] = min(entity['status']['mana'] + mana_recover, mana_max)
+    mana_recovered = entity['status']['mana'] - mana_anterior
+
+    print(st.colors(f"{entity['nome']} recuperou {mana_recovered:.1f} de mana", 6))
 
 def verif_morte(entity):
     if entity['status']['hp'] <= 0:
@@ -92,4 +114,4 @@ def IA_monstro(enemy, entity):
                 combate = atacar(enemy, escolha_monstro, entity)
                 relatorio(combate)
             else:
-                en.cooldown_decrease(enemy, escolha_monstro)               
+                en.cooldown_decrease(enemy)               

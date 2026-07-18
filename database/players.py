@@ -7,7 +7,7 @@ jogadores_database = {
     'status': {
         'hp': 100, 'mana': 100},
     'status_base': {
-        'hp': 90, 'mana': 97, 'dano': 4
+        'hp': 90, 'mana': 90, 'dano': 4
     },
     'status_max': {
         'hp': 100, 'mana': 100, 'dano': 22.5

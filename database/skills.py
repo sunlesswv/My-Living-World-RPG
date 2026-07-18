@@ -2,18 +2,18 @@ skills_database = {
 1: {
     'nome': 'corte', 'id': 1, 'tipo': 'arma', 'dano': 20, 'mana': 0, 'cooldown': 0,'cooldown_base': 2, 
     'efeitos': {
-        'sangramento': {'tipo': 'debuff', 'classe': 'continuo', 'chance': 100, 'dano_por_rodada': 2, 'duração': 2, 'modificadores': {}}
+        'sangramento': {'tipo': 'debuff', 'classe': 'continuo', 'chance': 5, 'dano_por_rodada': 2, 'duração': 2, 'modificadores': {}}
     }
 },
 
 2: {
     'nome': 'chute', 'id': 2, 'tipo': 'corporal', 'dano': 12, 'mana': 0, 'cooldown': 0, 'cooldown_base': 1, 
     'efeitos': {
-        'atordoamento': { 'tipo': 'debuff', 'classe': 'controle', 'chance': 100, 'duração': 2, 'modificadores': {}}
+        'atordoamento': { 'tipo': 'debuff', 'classe': 'controle', 'chance': 3, 'duração': 2, 'modificadores': {}}
     }
 },
 3: {
-    'nome': 'empurrão', 'id': 3, 'tipo': 'corporal', 'dano': 7, 'mana': 0, 'cooldown': 0, 'cooldown_base': 0, 
+    'nome': 'empurrão', 'id': 3, 'tipo': 'corporal', 'dano': 7, 'mana': 100, 'cooldown': 0, 'cooldown_base': 0, 
     'efeitos': {
         'atordoamento': { 'tipo': 'debuff', 'classe': 'controle', 'chance': 1, 'duração': 1, 'modificadores': {}}
     }
@@ -32,7 +32,7 @@ skills_database = {
    
 },
 6: {
-    'nome': 'rugido de orc', 'id': 6, 'tipo': 'corporal', 'dano': 25, 'mana': 30, 'cooldown': 0, 'cooldown_base': 6, 
+    'nome': 'rugido de orc', 'id': 6, 'tipo': 'corporal', 'dano': 25, 'mana': 50, 'cooldown': 0, 'cooldown_base': 6, 
     'efeitos': {
         'fraqueza': { 'tipo': 'debuff', 'classe': 'status', 'chance': 100, 'status_reduzido': 0.10, 'duração': 3, 'modificadores': {}}
 }   

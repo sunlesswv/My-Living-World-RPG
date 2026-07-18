@@ -84,6 +84,7 @@ def check_resultado(jogador, enemy, resultado, nome_save):
     elif resultado == 'win':
         print(st.colors(f'Vc derrotou um {enemy['nome']}!!'))
         cb.regain_hp(jogador, enemy, 0.6)
+        cb.regain_mana(jogador)
         sv.save(jogador, nome_save)
         mn.perfil(jogador)
         if st.validfim():
