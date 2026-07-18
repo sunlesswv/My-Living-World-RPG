@@ -3,6 +3,8 @@ from game import combat as cb
 from game import entities as en
 from game import menu as mn
 from game import save as sv
+from game import effects as ef
+from database import skills as s
 from database import skills as s
 from database import players as p
 from database import monstros as m
@@ -27,26 +29,37 @@ def init_game(jogador):
     return enemy
 
 def batalha(entity, enemy):
+    mn.perfil(entity, True)
     while True:
+        ef.processar_debuffs(entity)
+        if cb.verif_morte(entity):
+            return 'lose'
         mn.perfil(entity, False)
         mn.perfil(enemy, False)
+                
+        if cb.verif_ataque(entity):
+            mn.mostrar_ataques(entity)
+            escolha = mn.escolha_ataques(entity)
+            en.cooldown_decrease(entity, escolha)
+            combate = cb.atacar(entity, escolha, enemy)
+            cb.relatorio(combate)
+        else:
+            en.cooldown_decrease(entity)
 
-        mn.mostrar_ataques(entity)
-        escolha = mn.escolha_ataques(entity)
 
-        combate = cb.atacar(entity, escolha, enemy)
-        cb.relatorio(combate)
         en.refresh_entity(entity)
         st.lin(50)
-
+        if cb.verif_morte(enemy):
+            return 'win'
+        ef.processar_debuffs(enemy)
         if cb.verif_morte(enemy):
             return 'win'
         print('Esperando o ataque do monstro.',end='', flush=True)
         st.pontos()
         print()
-        escolha_monstro = randint(1, len(enemy['ataques']))
-        combate = cb.atacar(enemy, escolha_monstro, entity)
-        cb.relatorio(combate)
+
+        cb.IA_monstro(enemy, entity) 
+            
         st.lin(50)
         if cb.verif_morte(entity):
             return 'lose'

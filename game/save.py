@@ -12,8 +12,10 @@ def load_save(arquivo):
         with open(arquivo, "r", encoding="utf-8") as archv:
             jogador = json.load(archv)
             en.load_weapon(jogador)
+            en.load_skills(jogador)
             json_int_keys(jogador)
             return jogador
+            
             
 def save(player, arquivo="player1.json"):
     arquivo = Path("saves") / arquivo
@@ -21,8 +23,10 @@ def save(player, arquivo="player1.json"):
     
     jogador_save = deepcopy(player)
     en.unload_weapon(jogador_save)
+    en.unload_skills(jogador_save)
     with open(arquivo, "w", encoding="utf-8") as archv:
         json.dump(jogador_save, archv, indent=4, ensure_ascii=False)
+
 
 def int_key(entity):
     novo = {}
@@ -79,6 +83,8 @@ def new_save():
             print(st.colors('erro, esse save ja existe', 1))
         else:
             jogador = deepcopy(p.jogadores_database[1])
+            jogador['status']['hp'] = jogador['status_max']['hp']
+            jogador['status']['mana'] = jogador['status_max']['mana']
             jogador['nome'] = st.valid_name(input('digite o do personagem: '))
             with open(save_path, "w", encoding="utf-8") as archv:
                 json.dump(jogador, archv, indent=4, ensure_ascii=False)

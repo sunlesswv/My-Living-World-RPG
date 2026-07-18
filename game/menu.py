@@ -14,6 +14,8 @@ def perfil(entity, progresso = True):
     st.lin(50)
     print(entity['nome'].upper().center(50))
     print(st.colors(f'vida : {entity['status']['hp']:.0f}', 6))
+    print(st.colors(f'mana : {entity['status']['mana']:.0f}', 6))
+
 
     if progresso == True:
         print(st.colors(f'nivel: {entity['level']:.0f}', 6))
@@ -22,7 +24,7 @@ def perfil(entity, progresso = True):
 def mostrar_ataques(jogador):
     st.linc('MENU DE ATAQUES', 50)
     for id_atq, ataque in jogador['ataques'].items():
-        print(f'[{id_atq}]: {ataque['nome']}| dano: {ataque['dano']}')
+        print(f"[{id_atq}]: {ataque['nome']}| dano: {ataque['dano']}| mana: {ataque['mana']}| cooldown: {ataque['cooldown']}")
 
     st.lin(50)
 
@@ -31,6 +33,13 @@ def escolha_ataques(jogador):
         escolha = st.validnum('Escolha um ataque: ')
         st.lin(50)
         if escolha not in (jogador['ataques']):
-            print(st.colors('erro, digite apenas 1,2 ou 3', 1))
+            print(st.colors(f"erro, digite apenas ataques do menu de ataques", 1))
+            mostrar_ataques(jogador)
         else:
-            return escolha
+            ataque = jogador['ataques'][escolha]
+            if ataque['cooldown'] > 0:
+                print(f"ataque em cooldown por {ataque['cooldown']} rodadas")
+            elif ataque['mana'] > jogador['status']['mana']:
+                print(f"esse ataque custa {ataque['mana']} mana, vc tem apenas {jogador['status']['mana']} de mana")
+            else:
+                return escolha

@@ -1,8 +1,9 @@
 from copy import deepcopy
 from utils import strings as st
 from game import combat as cb
+from game import effects as ef
 from database import weapons as w
-
+from database import skills as s
 
 def create_entity(banco, id = 1):
     entity = deepcopy(banco[id])
@@ -10,6 +11,10 @@ def create_entity(banco, id = 1):
     [entity['arma']['classe']]
     [entity['arma']['id']]
     )
+    load_skills(entity)
+    refresh_entity(entity)
+    entity['status']['hp'] = entity['status_max']['hp']
+    entity['status']['mana'] = entity['status_max']['mana']
     return entity
 
 def level_up(entity, requerimento = 100):
@@ -54,16 +59,41 @@ def unload_weapon(entity):
     entity['arma'] = {'classe': entity['arma']['classe'], 
     'id': entity['arma']['id']}
 
+
+def load_skills(entity):
+    for key, skill in entity['ataques'].items():
+        entity['ataques'][key] = deepcopy(s.skills_database
+        [skill['id']])
+
+
+def unload_skills(entity):
+    for k, skill in entity['ataques'].items():
+        entity['ataques'][k] = {
+            'id': skill['id']}
+
+
+def cooldown_decrease(entity, ataque = 'sem_ataque'):
+    skills = entity['ataques']
+    if ataque != 'sem_ataque':
+        skills[ataque]['cooldown'] = skills[ataque]['cooldown_base'] 
+
+    for k in skills.keys():
+        if skills[k]['cooldown'] > 0 and k != ataque:
+            skills[k]['cooldown'] -= 1
+
+
 def refresh_entity(entity, relatorio = False):
     level_up(entity)
-    hp_anterior = entity['status']['hp']
-    for k in entity['status']:
-        entity['status'][k] = entity['status_base'][k] + (entity['level'] * entity['multiplicators'][k])
+    for k in entity['status_max']:
+        entity['status_max'][k] = entity['status_base'][k] + (entity['level'] * entity['modifiers']['level'][k])
+    if entity['modifiers']['debuffs']:
+        for name, debuff in entity['modifiers']['debuffs'].items():
+            if debuff['classe'] == 'status':
+                ef.aplicar_modificadores(entity, 'debuffs', name)
 
-    hp_perdido = entity['status']['hp'] - hp_anterior
-    entity['status']['hp'] -= hp_perdido
+    entity['status']['hp'] = min(entity['status']['hp'], entity['status_max']['hp'])
     weapon_damage = load_weapon(entity, True)
-    entity['status']['dano'] += weapon_damage
+    entity['status_max']['dano'] += weapon_damage
 
     if relatorio:
         show_damage(entity)
@@ -71,11 +101,11 @@ def refresh_entity(entity, relatorio = False):
         
 def show_damage(entity):
     name = entity['nome']
-    total =  entity['status']['dano']
+    total =  entity['status_max']['dano']
     base = entity['status_base']['dano']
     espada = load_weapon(entity, True)
-    bonus_nivel = entity['multiplicators']['dano']
-    bonus_nivel_total = entity['level'] * entity['multiplicators']['dano']
+    bonus_nivel = entity['modifiers']['level']['dano']
+    bonus_nivel_total = entity['level'] * entity['modifiers']['level']['dano']
     return f'''Nome da entidade: {name}
 Dano total: {total}
 Dano da espada: {espada}
